@@ -7,20 +7,7 @@
 	let selected;
 	let answer = '';
 
-	let features = [
-		{
-			id: 1,
-			text: `Stopwords`
-		},
-		{
-			id: 2,
-			text: `Times`
-		}
-	];
 
-	function handleSubmit() {
-		alert(`answered question ${selected.id} (${selected.text}) with "${answer}"`);
-	}
 </script>
 
 <!-- <input bind:value={text} />
@@ -40,41 +27,19 @@
 				<textarea bind:value={text} class="form-control resize-none p-2 border-3 mb-4" id="exampleFormControlTextarea1" rows="14" cols="30"></textarea>
 				<!-- <button on:click={async () => (metrics = await getMetrics(text))}>Get Metrics</button> -->
 				<button
-						disabled={!answer}
+						disabled={!text}
 						type="submit"
 						class="mx-20 bg-gray-300 hover:bg-gray-400 py-2 px-4 rounded"
 					>
 						Get Metrics
 					</button>
 			  </div>
+			  <p>{text}</p>
+
 		</section>
 		<!-- Margin -->
 		<section class="form m-10 col-span-4">
-			<Chart />
-			<form on:submit|preventDefault={handleSubmit}>
-				<div class="grid grid-cols-2 gap-0">
-					<select
-						class="form-select w-full mr-5 sm:col-span-1"
-						aria-label="Default select example"
-						bind:value={selected}
-						on:change={() => (answer = '')}
-					>
-						{#each features as question}
-							<option value={question}>
-								{question.text}
-							</option>
-						{/each}
-					</select>
-					<!-- <input bind:value={answer} /> -->
-					<button
-						disabled={!answer}
-						type="submit"
-						class="ml-5 bg-indigo-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-					>
-						Submit
-					</button>
-				</div>
-			</form>
+			<Chart text={text} />
 		</section>
 	</div>
 </main>
