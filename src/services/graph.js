@@ -1,7 +1,23 @@
-var options = {
-  chart: {type: 'bar'},
-  series: [{name: 'sales', data: [30,40,45,50,49,60,70,91,125]}],
-  xaxis: {categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]}
-}
-var chart = new ApexCharts(document.querySelector("#chart"), options);
-chart.render();
+import Highcharts from 'highcharts';
+
+export default (node, config) => {
+	const redraw = true;
+	const oneToOne = true;
+	const chart = Highcharts.chart(node, config);
+
+	const resizeObserver = new ResizeObserver(() => {
+		chart.reflow();
+	});
+
+	resizeObserver.observe(node);
+
+	return {
+		update: (config) => {
+			chart.update(config, redraw, oneToOne);
+		},
+		destroy: () => {
+			resizeObserver.disconnect();
+			chart.destroy();
+		}
+	};
+};
